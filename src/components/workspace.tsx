@@ -57,7 +57,7 @@ export function Panel({
   );
 }
 
-export function StatCard({ label, value, hint }: { label: string; value: string; hint?: string }) {
+export function StatCard({ label, value, hint }: { label: string; value: string; hint?: string | undefined }) {
   return (
     <div className="rounded-md border border-border bg-surface-raised px-3 py-2.5">
       <p className="label-mono">{label}</p>
