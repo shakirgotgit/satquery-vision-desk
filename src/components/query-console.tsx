@@ -1,20 +1,17 @@
 import { useState } from "react";
 import { CheckCircle2, CircleDashed, ImagePlus, Loader2, SendHorizonal, Upload } from "lucide-react";
 import { Panel, Tag } from "@/components/workspace";
-import { taskLabels, type TraceStep } from "@/lib/mock-data";
+import { exampleQueries, taskLabels, type TraceStep } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
-
-const suggestions = [
-  "How much built-up area appeared between the two dates?",
-  "Count the ships visible in the harbour.",
-  "Describe this scene in one paragraph.",
-  "Where is flooding visible in the SAR image?",
-];
 
 export function QueryComposer({
   placeholder = "Ask about the scene — e.g. \u201cWhat changed near the river between 2019 and 2024?\u201d",
+  attachedScenes = 2,
+  suggestions = exampleQueries,
 }: {
   placeholder?: string;
+  attachedScenes?: number;
+  suggestions?: readonly string[];
 }) {
   const [value, setValue] = useState("");
 
@@ -38,7 +35,7 @@ export function QueryComposer({
         <div className="flex items-center justify-between border-t border-border px-3 py-2">
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
             <ImagePlus className="h-4 w-4" />
-            2 scenes attached
+            {attachedScenes} scene{attachedScenes === 1 ? "" : "s"} attached · GeoTIFF, JPEG, PNG
           </div>
           <button
             type="submit"
