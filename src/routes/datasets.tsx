@@ -16,7 +16,7 @@ export const Route = createFileRoute("/datasets")({
       { property: "og:description", content: "Manage satellite scene collections and modalities." },
     ],
   }),
-  component: Datasets;
+  component: Datasets,
 });
 
 function Datasets() {
