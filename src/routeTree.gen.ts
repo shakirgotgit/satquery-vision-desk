@@ -10,33 +10,81 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ChangeDetectionRouteImport } from './routes/change-detection'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as OpticalSarRouteImport } from './routes/optical-sar'
+import { Route as SingleImageRouteImport } from './routes/single-image'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ChangeDetectionRoute = ChangeDetectionRouteImport.update({
+  id: '/change-detection',
+  path: '/change-detection',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OpticalSarRoute = OpticalSarRouteImport.update({
+  id: '/optical-sar',
+  path: '/optical-sar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SingleImageRoute = SingleImageRouteImport.update({
+  id: '/single-image',
+  path: '/single-image',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/change-detection': typeof ChangeDetectionRoute
+  '/dashboard': typeof DashboardRoute
+  '/optical-sar': typeof OpticalSarRoute
+  '/single-image': typeof SingleImageRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/change-detection': typeof ChangeDetectionRoute
+  '/dashboard': typeof DashboardRoute
+  '/optical-sar': typeof OpticalSarRoute
+  '/single-image': typeof SingleImageRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/change-detection': typeof ChangeDetectionRoute
+  '/dashboard': typeof DashboardRoute
+  '/optical-sar': typeof OpticalSarRoute
+  '/single-image': typeof SingleImageRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    '/' | '/change-detection' | '/dashboard' | '/optical-sar' | '/single-image'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    '/' | '/change-detection' | '/dashboard' | '/optical-sar' | '/single-image'
+  id:
+    | '__root__'
+    | '/'
+    | '/change-detection'
+    | '/dashboard'
+    | '/optical-sar'
+    | '/single-image'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ChangeDetectionRoute: typeof ChangeDetectionRoute
+  DashboardRoute: typeof DashboardRoute
+  OpticalSarRoute: typeof OpticalSarRoute
+  SingleImageRoute: typeof SingleImageRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +96,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/change-detection': {
+      id: '/change-detection'
+      path: '/change-detection'
+      fullPath: '/change-detection'
+      preLoaderRoute: typeof ChangeDetectionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/optical-sar': {
+      id: '/optical-sar'
+      path: '/optical-sar'
+      fullPath: '/optical-sar'
+      preLoaderRoute: typeof OpticalSarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/single-image': {
+      id: '/single-image'
+      path: '/single-image'
+      fullPath: '/single-image'
+      preLoaderRoute: typeof SingleImageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ChangeDetectionRoute: ChangeDetectionRoute,
+  DashboardRoute: DashboardRoute,
+  OpticalSarRoute: OpticalSarRoute,
+  SingleImageRoute: SingleImageRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
