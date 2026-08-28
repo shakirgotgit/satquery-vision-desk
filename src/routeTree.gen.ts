@@ -10,14 +10,24 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as ChangeDetectionRouteImport } from './routes/change-detection'
 import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as DatasetsRouteImport } from './routes/datasets'
+import { Route as ModelsRouteImport } from './routes/models'
 import { Route as OpticalSarRouteImport } from './routes/optical-sar'
+import { Route as QueriesRouteImport } from './routes/queries'
+import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SingleImageRouteImport } from './routes/single-image'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ChangeDetectionRoute = ChangeDetectionRouteImport.update({
@@ -30,9 +40,29 @@ const DashboardRoute = DashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DatasetsRoute = DatasetsRouteImport.update({
+  id: '/datasets',
+  path: '/datasets',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ModelsRoute = ModelsRouteImport.update({
+  id: '/models',
+  path: '/models',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OpticalSarRoute = OpticalSarRouteImport.update({
   id: '/optical-sar',
   path: '/optical-sar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QueriesRoute = QueriesRouteImport.update({
+  id: '/queries',
+  path: '/queries',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SingleImageRoute = SingleImageRouteImport.update({
@@ -43,47 +73,90 @@ const SingleImageRoute = SingleImageRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/change-detection': typeof ChangeDetectionRoute
   '/dashboard': typeof DashboardRoute
+  '/datasets': typeof DatasetsRoute
+  '/models': typeof ModelsRoute
   '/optical-sar': typeof OpticalSarRoute
+  '/queries': typeof QueriesRoute
+  '/settings': typeof SettingsRoute
   '/single-image': typeof SingleImageRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/change-detection': typeof ChangeDetectionRoute
   '/dashboard': typeof DashboardRoute
+  '/datasets': typeof DatasetsRoute
+  '/models': typeof ModelsRoute
   '/optical-sar': typeof OpticalSarRoute
+  '/queries': typeof QueriesRoute
+  '/settings': typeof SettingsRoute
   '/single-image': typeof SingleImageRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/change-detection': typeof ChangeDetectionRoute
   '/dashboard': typeof DashboardRoute
+  '/datasets': typeof DatasetsRoute
+  '/models': typeof ModelsRoute
   '/optical-sar': typeof OpticalSarRoute
+  '/queries': typeof QueriesRoute
+  '/settings': typeof SettingsRoute
   '/single-image': typeof SingleImageRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/change-detection' | '/dashboard' | '/optical-sar' | '/single-image'
+    | '/'
+    | '/about'
+    | '/change-detection'
+    | '/dashboard'
+    | '/datasets'
+    | '/models'
+    | '/optical-sar'
+    | '/queries'
+    | '/settings'
+    | '/single-image'
   fileRoutesByTo: FileRoutesByTo
   to:
-    '/' | '/change-detection' | '/dashboard' | '/optical-sar' | '/single-image'
+    | '/'
+    | '/about'
+    | '/change-detection'
+    | '/dashboard'
+    | '/datasets'
+    | '/models'
+    | '/optical-sar'
+    | '/queries'
+    | '/settings'
+    | '/single-image'
   id:
     | '__root__'
     | '/'
+    | '/about'
     | '/change-detection'
     | '/dashboard'
+    | '/datasets'
+    | '/models'
     | '/optical-sar'
+    | '/queries'
+    | '/settings'
     | '/single-image'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
   ChangeDetectionRoute: typeof ChangeDetectionRoute
   DashboardRoute: typeof DashboardRoute
+  DatasetsRoute: typeof DatasetsRoute
+  ModelsRoute: typeof ModelsRoute
   OpticalSarRoute: typeof OpticalSarRoute
+  QueriesRoute: typeof QueriesRoute
+  SettingsRoute: typeof SettingsRoute
   SingleImageRoute: typeof SingleImageRoute
 }
 
@@ -94,6 +167,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/change-detection': {
@@ -110,11 +190,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/datasets': {
+      id: '/datasets'
+      path: '/datasets'
+      fullPath: '/datasets'
+      preLoaderRoute: typeof DatasetsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/models': {
+      id: '/models'
+      path: '/models'
+      fullPath: '/models'
+      preLoaderRoute: typeof ModelsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/optical-sar': {
       id: '/optical-sar'
       path: '/optical-sar'
       fullPath: '/optical-sar'
       preLoaderRoute: typeof OpticalSarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/queries': {
+      id: '/queries'
+      path: '/queries'
+      fullPath: '/queries'
+      preLoaderRoute: typeof QueriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/single-image': {
@@ -129,9 +237,14 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
   ChangeDetectionRoute: ChangeDetectionRoute,
   DashboardRoute: DashboardRoute,
+  DatasetsRoute: DatasetsRoute,
+  ModelsRoute: ModelsRoute,
   OpticalSarRoute: OpticalSarRoute,
+  QueriesRoute: QueriesRoute,
+  SettingsRoute: SettingsRoute,
   SingleImageRoute: SingleImageRoute,
 }
 export const routeTree = rootRouteImport
