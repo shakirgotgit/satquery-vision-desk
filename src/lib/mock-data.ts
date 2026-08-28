@@ -217,31 +217,108 @@ export interface DatasetItem {
   name: string;
   sensor: string;
   modality: "Optical" | "SAR" | "Multimodal";
+  dataType: string;
   scenes: number;
   resolution: string;
+  region: string;
+  acquiredAt: string;
   updatedAt: string;
 }
 
 export const mockDatasets: DatasetItem[] = [
-  { id: "ds1", name: "Urban Growth Pune", sensor: "Sentinel-2 L2A", modality: "Optical", scenes: 24, resolution: "10 m", updatedAt: "2026-08-24" },
-  { id: "ds2", name: "Flood Monitoring Assam", sensor: "Sentinel-1 GRD", modality: "SAR", scenes: 18, resolution: "20 m", updatedAt: "2026-08-21" },
-  { id: "ds3", name: "Coastal Erosion Gujarat", sensor: "Sentinel-1 + 2", modality: "Multimodal", scenes: 31, resolution: "10 m", updatedAt: "2026-08-19" },
-  { id: "ds4", name: "Airfield Inventory", sensor: "WorldView-3", modality: "Optical", scenes: 12, resolution: "0.3 m", updatedAt: "2026-08-12" },
+  { id: "ds1", name: "Urban Growth Pune", sensor: "Sentinel-2 L2A", modality: "Optical", dataType: "Multispectral (13 bands)", scenes: 24, resolution: "10 m", region: "Pune, Maharashtra · 18.52° N, 73.86° E", acquiredAt: "2024-11-02", updatedAt: "2026-08-24" },
+  { id: "ds2", name: "Flood Monitoring Assam", sensor: "Sentinel-1 GRD", modality: "SAR", dataType: "C-band VV/VH backscatter", scenes: 18, resolution: "20 m", region: "Brahmaputra basin, Assam · 26.20° N, 91.75° E", acquiredAt: "2024-07-18", updatedAt: "2026-08-21" },
+  { id: "ds3", name: "Coastal Erosion Gujarat", sensor: "Sentinel-1 + 2", modality: "Multimodal", dataType: "Optical + SAR pairs", scenes: 31, resolution: "10 m", region: "Gulf of Khambhat, Gujarat · 21.64° N, 72.30° E", acquiredAt: "2025-01-09", updatedAt: "2026-08-19" },
+  { id: "ds4", name: "Airfield Inventory", sensor: "WorldView-3", modality: "Optical", dataType: "Pan-sharpened RGB", scenes: 12, resolution: "0.3 m", region: "Multiple AOIs, South Asia", acquiredAt: "2025-03-22", updatedAt: "2026-08-12" },
+  { id: "ds5", name: "Agricultural Change Punjab", sensor: "Landsat 9 OLI-2", modality: "Optical", dataType: "Surface reflectance", scenes: 27, resolution: "30 m", region: "Ludhiana, Punjab · 30.90° N, 75.85° E", acquiredAt: "2024-12-11", updatedAt: "2026-08-08" },
+  { id: "ds6", name: "Cyclone Damage Odisha", sensor: "Cartosat-3 + RISAT", modality: "Multimodal", dataType: "Optical + X-band SAR", scenes: 15, resolution: "1 m / 3 m", region: "Puri, Odisha · 19.81° N, 85.83° E", acquiredAt: "2025-05-30", updatedAt: "2026-07-29" },
 ];
 
 export interface ModelItem {
   id: string;
   name: string;
   task: TaskType;
+  modality: "Optical" | "SAR" | "Multimodal";
   backbone: string;
+  description: string;
   status: "ready" | "planned";
   metric: string;
 }
 
 export const mockModels: ModelItem[] = [
-  { id: "m1", name: "RSVQA-Lite", task: "vqa", backbone: "ViT-B/16 + LLM adapter", status: "ready", metric: "78.4% acc (RSVQA-HR)" },
-  { id: "m2", name: "GeoCaption", task: "captioning", backbone: "BLIP-2 (RS finetune)", status: "ready", metric: "0.62 CIDEr" },
-  { id: "m3", name: "GroundRS", task: "grounding", backbone: "GroundingDINO", status: "ready", metric: "0.71 mIoU" },
-  { id: "m4", name: "ChangeFormer-B2", task: "change-detection", backbone: "Siamese transformer", status: "ready", metric: "0.89 F1 (LEVIR-CD)" },
-  { id: "m5", name: "SARFuse", task: "sar-fusion", backbone: "Dual-encoder fusion", status: "planned", metric: "benchmark pending" },
+  { id: "m1", name: "RSVQA-Lite", task: "vqa", modality: "Optical", backbone: "ViT-B/16 + LLM adapter", description: "Answers counting, presence and comparison questions on a single optical scene.", status: "ready", metric: "78.4% acc (RSVQA-HR)" },
+  { id: "m2", name: "GeoCaption", task: "captioning", modality: "Optical", backbone: "BLIP-2 (RS finetune)", description: "Generates descriptive summaries of land cover, infrastructure and terrain.", status: "ready", metric: "0.62 CIDEr" },
+  { id: "m3", name: "GroundRS", task: "grounding", modality: "Optical", backbone: "GroundingDINO", description: "Localises the objects or regions referenced in a text query as bounding boxes.", status: "ready", metric: "0.71 mIoU" },
+  { id: "m4", name: "ChangeFormer-B2", task: "change-detection", modality: "Optical", backbone: "Siamese transformer", description: "Produces bi-temporal change masks with per-class area statistics.", status: "ready", metric: "0.89 F1 (LEVIR-CD)" },
+  { id: "m5", name: "SARFuse", task: "sar-fusion", modality: "Multimodal", backbone: "Dual-encoder fusion", description: "Fuses optical reflectance with SAR backscatter for all-weather interpretation.", status: "planned", metric: "benchmark pending" },
+  { id: "m6", name: "FloodSAR-Net", task: "sar-fusion", modality: "SAR", backbone: "U-Net (VV/VH)", description: "Segments standing water from SAR backscatter under full cloud cover.", status: "planned", metric: "benchmark pending" },
 ];
+
+/** Metadata shown next to a scene preview. */
+export interface SceneMeta {
+  name: string;
+  sensor: string;
+  acquiredAt: string;
+  resolution: string;
+  bands: string;
+  crs: string;
+  size: string;
+  cloud?: string;
+}
+
+export const opticalSceneMeta: SceneMeta = {
+  name: "S2A_MSIL2A_20241102_T43QGV.tif",
+  sensor: "Sentinel-2 L2A",
+  acquiredAt: "2024-11-02 05:41 UTC",
+  resolution: "10 m / pixel",
+  bands: "B02, B03, B04, B08",
+  crs: "EPSG:4326",
+  size: "1024 × 1024 px · 42 MB",
+  cloud: "38%",
+};
+
+export const sarSceneMeta: SceneMeta = {
+  name: "S1A_IW_GRDH_20241103_VVVH.tif",
+  sensor: "Sentinel-1 GRD",
+  acquiredAt: "2024-11-03 17:12 UTC",
+  resolution: "20 m / pixel",
+  bands: "VV, VH",
+  crs: "EPSG:4326",
+  size: "1024 × 1024 px · 38 MB",
+};
+
+export const beforeSceneMeta: SceneMeta = {
+  name: "S2A_MSIL2A_20190314_T43QGV.tif",
+  sensor: "Sentinel-2 L2A",
+  acquiredAt: "2019-03-14 05:38 UTC",
+  resolution: "10 m / pixel",
+  bands: "B02, B03, B04, B08",
+  crs: "EPSG:4326",
+  size: "1024 × 1024 px · 40 MB",
+  cloud: "4%",
+};
+
+/** Analysis-type distribution used on the dashboard. */
+export const analysisTypeStats: { task: TaskType; count: number; share: number }[] = [
+  { task: "vqa", count: 46, share: 36 },
+  { task: "change-detection", count: 38, share: 30 },
+  { task: "grounding", count: 21, share: 16 },
+  { task: "captioning", count: 14, share: 11 },
+  { task: "sar-fusion", count: 9, share: 7 },
+];
+
+export const changeClasses = [
+  { label: "Built-up gain", area: "3.42 km²", share: 7.0, tone: "danger" as const },
+  { label: "Vegetation loss", area: "2.18 km²", share: 4.5, tone: "warning" as const },
+  { label: "Water extension", area: "0.61 km²", share: 1.2, tone: "primary" as const },
+  { label: "Unchanged", area: "42.9 km²", share: 87.3, tone: "success" as const },
+];
+
+export const exampleQueries = [
+  "How much built-up area appeared between the two dates?",
+  "Count the ships visible in the harbour.",
+  "Describe this scene in one paragraph.",
+  "Where is flooding visible in the SAR image?",
+  "Highlight farmland lost between 2019 and 2024.",
+];
+
