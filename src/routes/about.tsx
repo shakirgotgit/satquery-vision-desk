@@ -62,25 +62,36 @@ function About() {
             </ul>
           </Panel>
 
-          <Panel title="Architecture" subtitle="Current build status">
+          <Panel title="Technology stack" subtitle="What this prototype is built with">
             <div className="grid gap-3 sm:grid-cols-2">
-              <div className="rounded-md border border-border bg-surface-raised p-3">
-                <p className="label-mono">Frontend</p>
-                <p className="mt-1 text-sm text-foreground">React · TypeScript · Tailwind CSS</p>
-                <p className="mt-1 text-xs text-muted-foreground">
-                  Structure, navigation and component system in place. Mock data only.
-                </p>
-              </div>
-              <div className="rounded-md border border-border bg-surface-raised p-3">
-                <p className="label-mono">Backend</p>
-                <p className="mt-1 text-sm text-foreground">FastAPI (separate team member)</p>
-                <p className="mt-1 text-xs text-muted-foreground">
-                  Not implemented here — no API calls or model inference yet.
-                </p>
-              </div>
+              {techStack.map((t) => (
+                <div key={t.layer} className="rounded-md border border-border bg-surface-raised p-3">
+                  <div className="flex items-center justify-between gap-2">
+                    <p className="label-mono">{t.layer}</p>
+                    <Tag tone={t.status === "implemented" ? "success" : "warning"}>{t.status}</Tag>
+                  </div>
+                  <p className="mt-1 text-sm text-foreground">{t.stack}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">{t.detail}</p>
+                </div>
+              ))}
             </div>
           </Panel>
+
+          <Panel title="Team" subtitle="SIH26167 · role split" bodyClassName="p-0">
+            <ul className="divide-y divide-border">
+              {team.map((m) => (
+                <li key={m.role} className="flex flex-wrap items-center justify-between gap-3 px-4 py-3">
+                  <div>
+                    <p className="text-sm font-medium text-foreground">{m.role}</p>
+                    <p className="text-xs text-muted-foreground">{m.detail}</p>
+                  </div>
+                  <Tag tone={m.tone}>{m.owner}</Tag>
+                </li>
+              ))}
+            </ul>
+          </Panel>
         </div>
+
         <HowItWorks />
       </div>
     </div>
