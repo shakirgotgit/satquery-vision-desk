@@ -30,6 +30,54 @@ const capabilities = [
   { title: "Evidence-first answers", detail: "Every answer ships with overlays, statistics and confidence." },
 ];
 
+const techStack = [
+  {
+    layer: "Frontend",
+    stack: "React · TypeScript · Tailwind CSS",
+    detail: "Routing, GIS viewer, change maps, confidence bars and execution traces.",
+    status: "implemented" as const,
+  },
+  {
+    layer: "UI system",
+    stack: "Semantic design tokens · lucide icons",
+    detail: "Deep-space dark theme with cyan/violet accents and dense analytical panels.",
+    status: "implemented" as const,
+  },
+  {
+    layer: "Backend",
+    stack: "FastAPI · Python",
+    detail: "Inference orchestration, tiling and geo-registration. Planned.",
+    status: "planned" as const,
+  },
+  {
+    layer: "Models",
+    stack: "ViT / BLIP-2 / GroundingDINO / ChangeFormer",
+    detail: "Remote-sensing VQA, captioning, grounding, change detection and SAR fusion.",
+    status: "planned" as const,
+  },
+  {
+    layer: "Agent layer",
+    stack: "Intent parsing · tool routing",
+    detail: "Selects the right model per query and assembles grounded evidence.",
+    status: "planned" as const,
+  },
+  {
+    layer: "Data",
+    stack: "GeoTIFF · Sentinel-1/2 · Landsat",
+    detail: "Currently mock scene collections; catalog integration planned.",
+    status: "planned" as const,
+  },
+];
+
+const team = [
+  { role: "Frontend & UX", owner: "Member 1", detail: "Interface, GIS visualization and workflow design.", tone: "primary" as const },
+  { role: "Backend & APIs", owner: "Member 2", detail: "FastAPI services, storage and job orchestration.", tone: "ai" as const },
+  { role: "Vision models", owner: "Member 3", detail: "VQA, captioning and grounding model integration.", tone: "primary" as const },
+  { role: "Change & SAR", owner: "Member 4", detail: "Bi-temporal detection and multimodal fusion.", tone: "ai" as const },
+  { role: "Agent orchestration", owner: "Member 5", detail: "Task identification and model routing logic.", tone: "primary" as const },
+  { role: "Evaluation & docs", owner: "Member 6", detail: "Benchmarks, metrics and submission material.", tone: "neutral" as const },
+];
+
 function About() {
   return (
     <div className="space-y-6">
